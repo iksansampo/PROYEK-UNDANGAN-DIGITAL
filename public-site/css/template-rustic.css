@@ -1,0 +1,22 @@
+/* Template: Rustic Brown (Ini adalah style default kita) */
+:root {
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+    --color-primary: #8B4513; /* SaddleBrown */
+    --color-secondary: #D2B48C; /* Tan */
+    --color-background: #FDF5E6; /* OldLace */
+    --color-text: #5D4037; /* Dark Brown */
+    --color-white: #FFFFFF;
+}
+/* Style lainnya akan mengambil dari style.css utama */
+
+/* Variabel Warna untuk Tema Rustic */
+:root {
+    --footer-bg-color: #f5f0e8;
+    --footer-text-color: #654321;
+    --footer-heading-color: #4a2c0f;
+    --footer-border-color: #e0d5c4;
+    --nav-bg-color: #ffffff;
+    --nav-icon-color: #654321;
+    --nav-icon-active-color: #8B4513; /* Warna Coklat Rustic */
+}

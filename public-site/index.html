@@ -1,0 +1,82 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- META TAGS UNTUK SOCIAL MEDIA PREVIEW AKAN DILETAKKAN DI SINI -->
+    <!-- META_TAGS_PLACEHOLDER -->
+
+    
+    <!-- Judul akan diisi oleh JS -->
+    <title>Undangan Pernikahan</title>
+
+    <!-- Preconnect untuk Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts: Playfair Display untuk judul, Poppins untuk teks biasa -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Library Ikon (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet Utama -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- TAMBAHKAN LINK FONT AWESOME DI SINI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+
+    <!-- Tombol Kontrol Musik -->
+    <div id="music-control" class="music-control-btn hidden">
+        <i class="fas fa-music"></i>
+    </div>
+    <audio id="background-music" loop></audio>
+
+    <!-- Layar Pembuka (Cover) -->
+    <div id="cover" class="cover-section">
+        <div class="cover-content">
+            <p class="fade-in">The Wedding Of</p>
+            <h1 id="cover-couple-names" class="fade-in">Mempelai & Mempelai</h1>
+            <div class="guest-info fade-in">
+                <p>Kepada Yth.</p>
+                <p>Bapak/Ibu/Saudara/i</p>
+                <h2 id="guest-name">Nama Tamu</h2>
+            </div>
+            <button id="open-invitation-btn" class="btn-open fade-in">
+                <i class="fas fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- Konten Utama Undangan (Awalnya tersembunyi) -->
+    <main id="main-content" class="hidden">
+        <!-- Navigasi Tetap (Sticky Nav) -->
+        <nav id="navbar">
+            <a href="#hero"><i class="fas fa-home"></i></a>
+            <a href="#couple"><i class="fas fa-heart"></i></a>
+            <a href="#events"><i class="fas fa-calendar-check"></i></a>
+            <a href="#gallery"><i class="fas fa-images"></i></a>
+            <a href="#rsvp"><i class="fas fa-envelope"></i></a>
+        </nav>
+
+        <!-- Placeholder untuk semua seksi yang akan di-render oleh JavaScript -->
+        <div id="dynamic-sections-container">
+            <!-- Contoh struktur seksi (akan digenerate oleh JS) -->
+            <!-- 
+            <section id="hero" class="hero-section">...</section>
+            <section id="couple" class="section">...</section>
+            <section id="events" class="section">...</section>
+            ...
+            -->
+        </div>
+    </main>
+
+    <!-- JavaScript Utama -->
+    <script src="js/main.js"></script>
+</body>
+</html>
+

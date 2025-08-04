@@ -1,0 +1,31 @@
+/* Template: Elegant Dark */
+:root {
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+    --color-primary: #D4AF37; /* Gold */
+    --color-secondary: #EAEAEA; /* Light Gray */
+    --color-background: #121212; /* Dark Background */
+    --color-text: #E0E0E0; /* Light Text */
+    --color-white: #FFFFFF;
+}
+.section-title { color: var(--color-primary); }
+.couple-name { color: var(--color-primary); }
+.event-card, .gift-card, #rsvp-form, .wish-card {
+    background-color: #1E1E1E;
+    border: 1px solid #333;
+}
+.btn-map, .btn-submit { background-color: var(--color-primary); color: #121212; }
+#navbar { background-color: rgba(30, 30, 30, 0.8); }
+#navbar a { color: var(--color-secondary); }
+#navbar a.active { color: var(--color-primary); }
+
+/* Variabel Warna untuk Tema Gelap */
+:root {
+    --footer-bg-color: #2c2c2c;
+    --footer-text-color: #a0a0a0;
+    --footer-heading-color: #ffffff;
+    --footer-border-color: #444444;
+    --nav-bg-color: #1e1e1e;
+    --nav-icon-color: #a0a0a0;
+    --nav-icon-active-color: #e0b477; /* Warna Emas */
+}

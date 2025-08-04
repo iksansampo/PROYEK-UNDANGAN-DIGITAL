@@ -1,0 +1,11 @@
+# Aktifkan Rewrite Engine
+RewriteEngine On
+
+# Atur base path
+RewriteBase /proyek-undangan/public-site/
+
+# Aturan untuk menangani URL undangan
+# Arahkan semua request ke undangan.php, BUKAN index.html lagi
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^undangan/(.*)$ undangan.php?slug=$1 [L,QSA]

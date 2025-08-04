@@ -1,0 +1,16 @@
+# Mengaktifkan modul rewrite engine dari Apache
+RewriteEngine On
+
+# Mengatur base directory untuk rewrite rule
+RewriteBase /proyek-undangan/backend/
+
+# Kondisi: Jika request BUKAN file yang ada secara fisik
+RewriteCond %{REQUEST_FILENAME} !-f
+# Kondisi: Jika request BUKAN direktori yang ada secara fisik
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# =================================================================
+# PERBAIKAN DI SINI: 'Rule' diubah menjadi 'RewriteRule'
+# =================================================================
+# Aturan: Arahkan semua request yang masuk ke folder 'api/' ke router.php
+RewriteRule ^api/(.*)$ api/router.php?request=$1 [L,QSA]
