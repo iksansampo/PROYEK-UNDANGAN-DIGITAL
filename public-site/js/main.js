@@ -178,29 +178,56 @@ guestNameEl.textContent = guestDisplayName;
         dynamicSectionsContainer.insertAdjacentHTML('beforeend', heroHtml);
     };
 
-    const renderCoupleSection = () => {
-        const { couple } = invitationData;
-        const coupleHtml = `
-            <section id="couple" class="section">
-                <h2 class="section-title">The Couple</h2>
-                <p class="section-subtitle">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:</p>
-                <div class="couple-container">
-                    <div class="couple-profile">
-                        <img src="${API_BASE_URL}/${couple.groom_photo}" alt="Mempelai Pria">
-                        <h3 class="couple-name">${couple.groom_name}</h3>
-                        <p class="couple-parents">Putra dari Bapak ${couple.groom_father}<br>& Ibu ${couple.groom_mother}</p>
-                    </div>
-                    <span class="couple-separator">&</span>
-                    <div class="couple-profile">
-                        <img src="${API_BASE_URL}/${couple.bride_photo}" alt="Mempelai Wanita">
-                        <h3 class="couple-name">${couple.bride_name}</h3>
-                        <p class="couple-parents">Putri dari Bapak ${couple.bride_father}<br>& Ibu ${couple.bride_mother}</p>
-                    </div>
-                </div>
-            </section>
-        `;
-        dynamicSectionsContainer.insertAdjacentHTML('beforeend', coupleHtml);
+    // Ganti seluruh fungsi renderCoupleSection Anda dengan kode yang sudah disesuaikan ini.
+// Ganti seluruh fungsi renderCoupleSection Anda dengan kode ini.
+const renderCoupleSection = () => {
+    const { couple } = invitationData;
+
+    // Fungsi bantuan ini tidak perlu diubah, sudah benar.
+    const createInstagramLink = (input) => {
+        if (!input) {
+            return '';
+        }
+        let username = input.includes('instagram.com') ? input.split('/').pop() : input;
+        let url = input.startsWith('http') ? input : `https://${input.includes('instagram.com') ? input : 'instagram.com/' + input}`;
+        username = username.replace(/\/$/, "");
+
+        return `<a href="${url}" target="_blank" class="social-icon">
+                   <i class="fab fa-instagram"></i>
+                   <span>@${username}</span>
+               </a>`;
     };
+
+    const groomInstaHtml = createInstagramLink(couple.groom_instagram);
+    const brideInstaHtml = createInstagramLink(couple.bride_instagram);
+
+    // --- PERUBAHAN UTAMA HANYA ADA DI DALAM BLOK HTML DI BAWAH INI ---
+    const coupleHtml = `
+        <section id="couple" class="section">
+            <h2 class="section-title">The Couple</h2>
+            <p class="section-subtitle">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami:</p>
+            <div class="couple-container">
+                <div class="couple-profile">
+                    <img src="${API_BASE_URL}/${couple.groom_photo}" alt="Mempelai Pria" class="couple-photo">
+                    <h3 class="couple-name">${couple.groom_name}</h3>
+                    <p class="couple-parents">Putra dari Bapak ${couple.groom_father}<br>& Ibu ${couple.groom_mother}</p>
+                    ${groomInstaHtml} <!-- POSISI SUDAH DIPINDAHKAN KE BAWAH NAMA ORANG TUA -->
+                </div>
+                <span class="couple-separator">&</span>
+                <div class="couple-profile">
+                    <img src="${API_BASE_URL}/${couple.bride_photo}" alt="Mempelai Wanita" class="couple-photo">
+                    <h3 class="couple-name">${couple.bride_name}</h3>
+                    <p class="couple-parents">Putri dari Bapak ${couple.bride_father}<br>& Ibu ${couple.bride_mother}</p>
+                    ${brideInstaHtml} <!-- POSISI SUDAH DIPINDAHKAN KE BAWAH NAMA ORANG TUA -->
+                </div>
+            </div>
+        </section>
+    `;
+    
+    dynamicSectionsContainer.insertAdjacentHTML('beforeend', coupleHtml);
+};
+
+
     
     const renderEventsSection = () => {
         const { events } = invitationData;

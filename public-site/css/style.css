@@ -772,3 +772,32 @@ body {
 #navbar {
     display: none !important;
 }
+
+/* Ganti seluruh blok CSS .social-icon Anda dengan ini */
+.couple-profile .social-icon {
+    display: flex; /* Menggunakan flexbox untuk tata letak */
+    flex-direction: column; /* Mengatur item secara vertikal */
+    align-items: center; /* Pusatkan item secara horizontal */
+    justify-content: center; /* Pusatkan item secara vertikal */
+    margin-top: 15px; /* Beri jarak dari nama orang tua */
+    text-decoration: none;
+    color: var(--color-text);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.couple-profile .social-icon:hover {
+    opacity: 1;
+    color: var(--color-primary); /* Warna berubah saat di-hover */
+}
+
+/* Atur ukuran ikon */
+.couple-profile .social-icon i {
+    font-size: 1.5em; /* Membuat ikon sedikit lebih besar */
+    margin-bottom: 5px; /* Jarak antara ikon dan username */
+}
+
+/* Atur teks username */
+.couple-profile .social-icon span {
+    font-size: 0.9em;
+}
