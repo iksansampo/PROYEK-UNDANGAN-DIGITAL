@@ -1,0 +1,71 @@
+/* Template: Minimalist White
+  Deskripsi: Tema bersih, modern, dan fokus pada tipografi.
+*/
+
+/* Variabel Warna Utama untuk Tema Minimalis */
+:root {
+    /* Font yang bersih dan modern */
+    --font-title: 'Poppins', sans-serif; /* Menggunakan Poppins yang lebih modern untuk judul */
+    --font-body: 'Poppins', sans-serif;
+
+    /* Palet warna monokromatik */
+    --color-primary: #333333;      /* Hitam pekat untuk aksen dan judul */
+    --color-secondary: #757575;    /* Abu-abu untuk sub-judul atau teks sekunder */
+    --color-background: #FFFFFF;   /* Latar belakang putih bersih */
+    --color-text: #424242;         /* Warna teks utama (tidak terlalu hitam) */
+    --color-border: #E0E0E0;      /* Warna border/garis yang sangat soft */
+    --color-card-bg: #F9F9F9;     /* Latar belakang kartu yang sedikit berbeda */
+}
+
+/* Penyesuaian Global */
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.section-title {
+    color: var(--color-primary);
+    font-weight: 600; /* Membuat judul lebih tegas */
+}
+
+.couple-name {
+    color: var(--color-primary);
+}
+
+/* Styling untuk Kartu (Event, Gift, RSVP) */
+.event-card, .gift-card, #rsvp-form, .wish-card {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px; /* Sudut yang sedikit membulat */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Bayangan yang sangat halus */
+}
+
+/* Styling untuk Tombol */
+.btn-map, .btn-submit, .btn-copy {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-map:hover, .btn-submit:hover, .btn-copy:hover {
+    background-color: #555555; /* Warna hover yang sedikit lebih terang */
+}
+
+/* Penyesuaian Navigasi Bawah */
+.bottom-nav {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border);
+}
+
+.bottom-nav a {
+    color: var(--color-secondary);
+}
+
+.bottom-nav a.active {
+    color: var(--color-primary);
+}

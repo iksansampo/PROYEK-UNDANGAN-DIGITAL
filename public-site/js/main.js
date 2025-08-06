@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Mengambil data undangan lengkap dari backend.
      * @param {string} slug - Slug unik undangan.
      */
+    // --- GANTI DENGAN FUNGSI BARU INI ---
     const fetchInvitationData = async (slug) => {
         if (!slug) {
             showError('Undangan tidak valid.');
@@ -67,15 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`${API_BASE_URL}/api/public/${slug}`);
             if (!response.ok) {
-                throw new Error('Undangan tidak ditemukan.');
+                throw new Error('Undangan tidak ditemukan atau terjadi kesalahan server.');
             }
             const result = await response.json();
             if (result.status === 'success') {
                 invitationData = result.data;
                 document.title = invitationData.invitation.invitation_title;
                 
-                // === PERUBAHAN UTAMA ADA DI SINI ===
-                // Panggil fungsi untuk memuat CSS template sebelum mengisi halaman.
+                // === INI PERBAIKAN KUNCINYA ===
+                // Kita ambil 'template_code' dari dalam objek 'invitation'
                 loadTemplateCss(invitationData.invitation.template_code);
                 
                 await populatePage();
@@ -296,21 +297,35 @@ guestNameEl.textContent = guestDisplayName;
         dynamicSectionsContainer.insertAdjacentHTML('beforeend', giftsHtml);
     };
 
-    // Ganti seluruh fungsi renderRsvpSection Anda dengan ini
-const renderRsvpSection = async () => {
+// Ganti seluruh fungsi renderRsvpSection Anda dengan kode di bawah ini.
+const renderRsvpSection = () => {
+    // 1. Membuat struktur HTML untuk seksi RSVP
     const rsvpHtml = `
         <section id="rsvp" class="section">
-            <h2 class="section-title">RSVP</h2>
+            <h2 class="section-title">RSVP & Wishes</h2>
             <p class="section-subtitle">Mohon konfirmasi kehadiran Anda untuk membantu kami mempersiapkan acara ini dengan lebih baik.</p>
             <form id="rsvp-form">
-                <div class="form-group"><label for="rsvp-name">Nama Anda</label><input type="text" id="rsvp-name" class="form-control" required></div>
-                <div class="form-group"><label>Konfirmasi Kehadiran</label><select id="rsvp-status" class="form-control" required><option value="Hadir">Ya, saya akan hadir</option><option value="Tidak Hadir">Maaf, saya tidak bisa hadir</option></select></div>
-                <div class="form-group"><label for="rsvp-message">Ucapan & Doa</label><textarea id="rsvp-message" class="form-control" placeholder="Tulis ucapan dan doa Anda di sini..."></textarea></div>
+                <div class="form-group">
+                    <label for="rsvp-name">Nama Anda</label>
+                    <input type="text" id="rsvp-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-status">Konfirmasi Kehadiran</label>
+                    <select id="rsvp-status" class="form-control" required>
+                        <option value="Hadir">Ya, saya akan hadir</option>
+                        <option value="Tidak Hadir">Maaf, tidak bisa hadir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-message">Ucapan & Doa</label>
+                    <textarea id="rsvp-message" class="form-control" placeholder="Tulis ucapan dan doa Anda di sini..."></textarea>
+                </div>
                 <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
             </form>
             <h3 style="margin-top: 50px;">Ucapan & Doa</h3>
             <div class="wishes-list-container">
                 <div class="wishes-list">
+                    <!-- Placeholder ini akan diganti oleh data ucapan -->
                     <p class="placeholder-wish">Memuat ucapan...</p>
                 </div>
             </div>
@@ -318,24 +333,22 @@ const renderRsvpSection = async () => {
     `;
     dynamicSectionsContainer.insertAdjacentHTML('beforeend', rsvpHtml);
 
-    // Ambil data RSVP awal setelah section dirender
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/rsvps/${invitationData.invitation.id}`);
-        const result = await response.json();
-        const wishesList = document.querySelector('.wishes-list');
-        
-        if (result.status === 'success' && result.data.length > 0) {
-            renderNewWishes(result.data); // Gunakan fungsi baru untuk render
-        } else {
-            wishesList.querySelector('.placeholder-wish').textContent = 'Jadilah yang pertama mengirim ucapan!';
-        }
-        
-        // Mulai polling setelah data awal berhasil dimuat
-        startRsvpPolling(invitationData.invitation.id);
+    // --- INILAH PERBAIKAN UTAMANYA ---
+    // 2. Langsung gunakan data RSVP yang sudah ada dari `invitationData`
+    //    Kita tidak perlu lagi melakukan `fetch` kedua kali.
+    const wishesList = document.querySelector('.wishes-list');
+    const initialWishes = invitationData.rsvps; // Mengambil data dari paket awal
 
-    } catch (error) {
-        document.querySelector('.placeholder-wish').textContent = 'Gagal memuat ucapan.';
+    if (initialWishes && initialWishes.length > 0) {
+        // Balik urutan agar yang terlama muncul pertama kali saat load
+        renderNewWishes(initialWishes.reverse()); 
+    } else {
+        // Jika tidak ada ucapan, tampilkan pesan placeholder
+        wishesList.querySelector('.placeholder-wish').textContent = 'Jadilah yang pertama mengirim ucapan!';
     }
+    
+    // 3. Mulai polling untuk ucapan baru setelah data awal ditampilkan
+    startRsvpPolling(invitationData.invitation.id);
 };
 
     
@@ -495,8 +508,7 @@ const startRsvpPolling = (invitationId) => {
         }, 1000);
     };
 
-    // Ganti seluruh fungsi handleRsvpSubmit Anda dengan ini
-// Ganti seluruh fungsi handleRsvpSubmit Anda dengan ini
+// Ganti seluruh fungsi handleRsvpSubmit Anda dengan kode ini.
 const handleRsvpSubmit = async (e) => {
     e.preventDefault();
     const rsvpForm = e.target;
@@ -520,22 +532,80 @@ const handleRsvpSubmit = async (e) => {
         const result = await response.json();
         if (!response.ok) throw new Error(result.message);
         
-        alert(result.message);
+        // --- INI PERUBAHANNYA ---
+        // Ganti alert() dengan notifikasi kustom yang baru kita buat.
+        showToastNotification(result.message, 'success');
         
-        // Hapus pembaruan instan. Biarkan polling yang menanganinya
-        // agar data selalu sinkron dengan server.
-
+        // Kosongkan form setelah berhasil
         rsvpForm.reset();
         // Isi kembali nama tamu yang sudah ada di cover
-        document.getElementById('rsvp-name').value = guestNameEl.textContent; 
+        const guestDisplayName = document.getElementById('guest-name').textContent;
+        document.getElementById('rsvp-name').value = guestDisplayName; 
 
     } catch (error) {
-        alert('Gagal mengirim RSVP: ' + error.message);
+        // Tampilkan notifikasi error jika gagal
+        showToastNotification('Gagal mengirim RSVP: ' + error.message, 'error');
     } finally {
+        // Kembalikan tombol ke keadaan semula
         submitButton.disabled = false;
         submitButton.textContent = 'Kirim Konfirmasi';
     }
 };
+
+
+/**
+ * FUNGSI BARU: Menampilkan notifikasi kustom (toast) yang lebih modern.
+ * @param {string} message - Pesan yang akan ditampilkan.
+ * @param {string} type - Tipe notifikasi ('success' atau 'error').
+ */
+const showToastNotification = (message, type = 'success') => {
+    // Hapus toast lama jika ada, untuk mencegah tumpukan notifikasi
+    const oldToast = document.querySelector('.toast-notification');
+    if (oldToast) {
+        oldToast.remove();
+    }
+
+    // Buat elemen div untuk notifikasi
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`; // Kelas untuk styling success/error
+    toast.textContent = message;
+
+    // Tambahkan style langsung via JavaScript agar tidak perlu mengubah file CSS
+    Object.assign(toast.style, {
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        backgroundColor: type === 'success' ? '#4CAF50' : '#F44336', // Hijau untuk sukses, Merah untuk error
+        color: 'white',
+        padding: '16px',
+        borderRadius: '8px',
+        zIndex: '1000',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+        opacity: '0',
+        transition: 'opacity 0.5s, bottom 0.5s',
+    });
+
+    // Tambahkan toast ke body
+    document.body.appendChild(toast);
+
+    // Animasi muncul
+    setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.bottom = '40px';
+    }, 100);
+
+    // Animasi hilang setelah 3 detik
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.bottom = '20px';
+        // Hapus elemen dari DOM setelah animasi selesai
+        setTimeout(() => {
+            toast.remove();
+        }, 500);
+    }, 3000);
+};
+
 
 
     
